@@ -4,7 +4,7 @@
  * 2. Export all the functionalities of the model through the file.
  * 
  * one of the biggest advantages of using index.js file is,other file
- * trying to import this file just need to provide trhe module name.
+ * trying to import this file just need to provide the module name.
  */
 
 
@@ -19,16 +19,20 @@ const Sequelize=require ('sequelize');
 const seq =  new Sequelize(
     config.DB,
     config.USER,
-    config.PASSWORD,
+    config.PASSWORD, 
     {
         host: config.HOST,
         dialect: config.dialect
     }
 );
 
-const db={};
-db.Sequelize=Sequelize;
+const db={};//db object is created
+db.Sequelize=Sequelize;//adding Sequelize to the above created object
 db.sequelize=seq;
-db.category=require('./category.model.js')(db.sequelize,Sequelize);
+db.category=require('./category.model.js')(seq,Sequelize);
+db.product=require('./product.model.js')(seq,Sequelize);
+/**
+ * Above we are adding elements to the db object
+ */
 
-module.exports=db;
+module.exports=db;//Finally we are exporting it

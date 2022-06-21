@@ -18,8 +18,8 @@ module.exports = (sequelize, Sequelize) => {
 
         },
         name: {
-            type: Sequelize.STRING, 
-            allowNull: false,
+            type: Sequelize.STRING,
+            allowNull: false
         },
         description: {
             type: Sequelize.STRING
@@ -29,6 +29,9 @@ module.exports = (sequelize, Sequelize) => {
     return Category;
 
 }
+
+
+
 
 
 

@@ -37,7 +37,8 @@ exports.create=(req,res)=>{
         description: req.body.description
     };
 
-    Category.create(category).then(category =>{
+    Category.create(category)
+     .then(category =>{
         console.log(`category name: [$category.name] got inserted`)
         res.status(201).send(category);
     })
@@ -96,6 +97,11 @@ exports.findOne=(req,res)=>{
 
     Category.findByPk(categoryID)
     .then(category =>{
+        if(!category){
+            return res.status(404).json({
+                message : 'Category not found'
+            })
+        }
         res.status(200).send(category);
     })
     .catch(err=>{
@@ -135,6 +141,39 @@ exports.update=(req,res)=>{
             res.status(500).send({
                 message:"Some internal error occured while fetching"
             })
+        })
+    })
+    .catch(err=>{
+        //Where the updation task failed
+        res.status(500).send({
+            message:"Some internal error while updating the category"
+        })
+    })
+
+}
+
+/**
+ * Delete an existing category based on categoryID
+ */
+
+exports.delete=(req,res)=>{
+    const categoryId=req.params.id;
+
+    Category.destroy({
+        where:{
+            id:categoryId
+        }
+    })
+
+    .then(result=>{
+        
+        res.status(200).send({
+            message:"Successfully deleted the category"
+        })
+    })
+    .catch(err=>{
+        res.status(500).send({
+            message:"Some internal error while deleting the category by Id"
         })
     })
 }
